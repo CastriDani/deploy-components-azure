@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: TerraformCLI@0
+  inputs:
+    command: 'init'
+    workingDirectory: '.'  # Aquí se coloca el directorio donde se encuentra el archivo main.tf
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'plan'
+    workingDirectory: '.' # Aquí se coloca el directorio donde se encuentra el archivo main.tf
+    environmentServiceNameAzureRM: '<TuNombreServicioConexiónAzureRM>'
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'apply'
+    workingDirectory: '.' # Aquí se coloca el directorio donde se encuentra el archivo main.tf
+    environmentServiceNameAzureRM: '<TuNombreServicioConexiónAzureRM>'
